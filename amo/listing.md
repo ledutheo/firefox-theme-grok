@@ -11,46 +11,43 @@ Grok Night
 
 ## Summary (FR)
 
-Thème Firefox aux couleurs de grok.com : chrome noir, texte blanc, accent orange.
+L’appli Grok, dans Firefox. Pour les fans — et pour ceux qui n’ont pas encore compris.
 
 ## Summary (EN)
 
-Firefox theme in grok.com colors: black chrome, white type, orange accent.
+Grok, in Firefox. For fans — and for anyone who hasn’t figured it out yet.
 
 ## Description (FR)
 
-Grok Night habille Firefox comme grok.com.
+Grok Night, c’est Grok dans la chrome de Firefox.
 
-- Chrome void (`#0A0A0A`), barres `#141414`
-- Texte `#FCFCFC`, secondaire `#9E9E9E`
-- Accent `#FF6B35` : ligne d’onglet, chargement, focus de l’urlbar, icônes « attention »
-- `color_scheme: dark` pour about: et le chrome Firefox
-- Les sites restent les sites (`content_color_scheme: auto`)
+Void `#0A0A0A`. Barres `#141414`. Texte `#FCFCFC`. Étincelle `#FF6B35` sur l’onglet actif, le chargement, l’urlbar au focus.
 
-Thème **non officiel**. Pas un produit xAI. Marque originale (étoile + noyau orange), pas leur logo.
+Les sites restent les sites. Le navigateur, lui, est à nous.
 
-Desktop Firefox 115+ et Android / Fennec (effet chrome limité sur Fenix).
+Fan theme, pas une release xAI. Marque originale (étoile + noyau orange).
 
-Code : https://github.com/ledutheo/firefox-theme-grok
+Firefox 115+ desktop, Android / Fennec (Fenix repeint peu).
+
+https://github.com/ledutheo/firefox-theme-grok
 
 ## Description (EN)
 
-Grok Night dresses Firefox like grok.com.
+Grok Night is Grok in Firefox chrome.
 
-- Void chrome (`#0A0A0A`), toolbars `#141414`
-- Type `#FCFCFC` / `#9E9E9E`
-- Accent `#FF6B35` on the selected tab line, tab loading, focused url bar, attention icons
-- Built-in Firefox pages follow dark chrome; websites are left alone
+Void `#0A0A0A`. Toolbars `#141414`. Type `#FCFCFC`. Spark `#FF6B35` on the selected tab, loading, focused url bar.
 
-Unofficial. Not an xAI product. Original mark, not their logo.
+Websites stay themselves. The browser is ours.
 
-Firefox 115+ desktop and Android / Fennec (Fenix applies very little of a static theme).
+Fan theme, not an xAI release. Original mark.
+
+Firefox 115+ desktop, Android / Fennec (Fenix applies very little).
 
 https://github.com/ledutheo/firefox-theme-grok
 
 ## Catégories / tags
 
-Appearance · Dark · Minimal · Unofficial
+Appearance · Dark · Grok
 
 Support: GitHub issues on ledutheo/firefox-theme-grok  
 Homepage: https://github.com/ledutheo/firefox-theme-grok

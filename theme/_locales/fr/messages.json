@@ -4,7 +4,7 @@
     "description": "Nom du thème dans about:addons et AMO."
   },
   "extensionDescription": {
-    "message": "Firefox habillé comme grok.com : chrome void, texte blanc, étincelle orange. Non officiel.",
+    "message": "L’appli Grok, dans Firefox. Pour les fans — et pour ceux qui n’ont pas encore compris.",
     "description": "Description courte AMO / about:addons."
   }
 }

@@ -5,23 +5,15 @@
 <h1 align="center">GROK NIGHT</h1>
 
 <p align="center">
-  Firefox, habillé comme <a href="https://grok.com">grok.com</a>.<br>
-  Void. Blanc. Une étincelle orange.
+  L’appli <a href="https://grok.com">Grok</a>. Dans Firefox.<br>
+  Pour les fans — et pour ceux qui n’ont pas encore compris.
 </p>
 
 <p align="center">
-  <img src="docs/img/hero.png" alt="Firefox with Grok Night — grok.com tab, orange address bar, void page" width="100%">
-</p>
-
-<p align="center">
-  <em>Unofficial. Not an xAI product. Original mark — not their logo.</em>
+  <img src="docs/img/hero.png" alt="Grok Night dans Firefox" width="100%">
 </p>
 
 ## Installer
-
-Firefox Release n’installe un thème **en permanent** que s’il est signé par Mozilla.
-
-**Maintenant, en local :**
 
 1. `about:debugging#/runtime/this-firefox`
 2. **Charger un module temporaire**
@@ -30,42 +22,27 @@ Firefox Release n’installe un thème **en permanent** que s’il est signé pa
 ```bash
 git clone git@github.com:ledutheo/firefox-theme-grok.git
 cd firefox-theme-grok
-# about:debugging → theme/manifest.json
 ```
 
-**Permanent :** soumettre `dist/grok-night.xpi` (via `./scripts/build.sh`) sur [addons.mozilla.org](https://addons.mozilla.org/developers/). Copier-coller : [`amo/listing.md`](amo/listing.md).
+Permanent : `./scripts/build.sh` → `dist/grok-night.xpi` sur [AMO](https://addons.mozilla.org/developers/). Texte prêt : [`amo/listing.md`](amo/listing.md).
 
-English: same three clicks in `about:debugging`, then pick `theme/manifest.json`.
+## Le chrome
 
-## Ce que tu vois
+Void `#0A0A0A`. Barres `#141414`. Texte `#FCFCFC`. Une étincelle `#FF6B35`.  
+Pas un sticker sur chaque fenêtre : étoiles, halo, petite marque. Grok est du silence — le navigateur aussi.
 
-| | |
-|---|---|
-| Chrome | `#0A0A0A` void, `#141414` barres |
-| Texte | `#FCFCFC` / `#9E9E9E` |
-| Accent | `#FF6B35` — onglet actif, focus urlbar, icônes « attention » |
-| Pages web | intouchées (`content_color_scheme: auto`) |
-| about: / chrome Firefox | sombres (`color_scheme: dark`) |
+Les sites restent les sites. Le chrome Firefox, lui, est à nous.
 
-Le header n’est **pas** un sticker « GROK NIGHT » sur chaque fenêtre. Étoiles, halo, petite marque à droite. grok.com est du silence ; le chrome aussi.
+## Plus loin
 
-## Ce que le format permet vraiment
-
-Un thème statique **s’arrête aux couleurs et aux images**. Dès que `"theme"` est dans le manifest, Firefox ignore scripts et permissions.
-
-Ici, le paquet utilise tout le schéma officiel (`theme.json`, Firefox 154) : 39 couleurs, `theme_frame`, `dark_theme`, `gecko` + `gecko_android`, i18n fr/en. Chaque clé est commentée dans [`theme/manifest.json`](theme/manifest.json).
-
-Au-dessus, dans [`beyond/`](beyond/) — pas dans le XPI listé :
-
-1. `browser.theme.update()` — jour / nuit à l’horloge  
-2. `theme_experiment` — Nightly, n’importe quel sélecteur chrome  
-3. `userChrome.css` — un profil, hors AMO  
-4. Fennec — `gecko_android` pour AMO ; le chrome Fenix ne repeint presque rien
+Un thème statique s’arrête aux couleurs. Le reste est dans [`beyond/`](beyond/) : jour/nuit à l’horloge, `theme_experiment`, `userChrome`, Fennec.
 
 ## English
 
-Unofficial Firefox theme in grok.com colors: black chrome, white type, orange spark. Load `theme/manifest.json` from `about:debugging`. Not an xAI product.
+Grok, in Firefox. For fans — and for anyone who hasn’t figured it out yet.  
+Load `theme/manifest.json` from `about:debugging`.
 
 ## Licence
 
-MIT · [ledutheo](https://github.com/ledutheo) · [preview](https://ledutheo.github.io/firefox-theme-grok/)
+MIT · [ledutheo](https://github.com/ledutheo) · [preview](https://ledutheo.github.io/firefox-theme-grok/)  
+Fan theme. Not an xAI release.
