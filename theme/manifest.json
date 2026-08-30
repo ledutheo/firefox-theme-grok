@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -47,23 +47,20 @@
       // Alternative Firefox récente (schema ThemeCSSGradient) :
       //   "theme_frame": { "linear-gradient": "90deg, #0A0A0A, #1A100C" }
       //   aussi : radial-gradient, conic-gradient, repeating-*.
-      "theme_frame": "images/theme_frame.png",
-      // Jusqu'à 15 calques. Dessinés AU-DESSUS de theme_frame.
-      // Peuvent être un chemin d'image OU un objet gradient.
-      "additional_backgrounds": [
-        "images/glow.png"
-      ]
+      "theme_frame": "images/theme_frame.png"
+      // additional_backgrounds : jusqu'à 15 calques AU-DESSUS de theme_frame
+      // (chemin ou { "linear-gradient": "..." }). Le halo est déjà dans
+      // theme_frame — un second calque salissait le chrome. Exemple :
+      //   "additional_backgrounds": ["images/glow.png"]
       // headerURL : alias mort depuis Firefox 70. Ne plus l'utiliser.
     },
     "properties": {
       // Où le décor se peint : auto | window | top_toolbars
       "backgrounds_area": "top_toolbars",
-      // Un alignement par calque additional_backgrounds (max 15).
-      "additional_backgrounds_alignment": ["right top"],
-      // no-repeat | repeat | repeat-x | repeat-y
-      "additional_backgrounds_tiling": ["no-repeat"],
-      // Taille CSS (cover, contain, 200px, 40% 100%…). Schéma : tableau de strings.
-      "additional_backgrounds_size": ["auto 200px"],
+      // Un alignement par calque additional_backgrounds (max 15) :
+      // "additional_backgrounds_alignment": ["right top"],
+      // "additional_backgrounds_tiling": ["no-repeat"],  // no-repeat | repeat | repeat-x | repeat-y
+      // "additional_backgrounds_size": ["auto 200px"],
       // Chrome Firefox (about:, panneaux) : auto | light | dark | system
       "color_scheme": "dark",
       // Pages web : on laisse le site / l'OS décider.
@@ -136,14 +133,14 @@
   // (cf. beyond/dynamic/ qui le fait à l'horloge).
   "dark_theme": {
     "images": {
-      "theme_frame": "images/theme_frame.png",
-      "additional_backgrounds": ["images/glow.png"]
+      "theme_frame": "images/theme_frame.png"
     },
     "properties": {
       "backgrounds_area": "top_toolbars",
-      "additional_backgrounds_alignment": ["right top"],
-      "additional_backgrounds_tiling": ["no-repeat"],
-      "additional_backgrounds_size": ["auto 200px"],
+      // Si tu réactives additional_backgrounds :
+      // "additional_backgrounds_alignment": ["right top"],
+      // "additional_backgrounds_tiling": ["no-repeat"],
+      // "additional_backgrounds_size": ["auto 200px"],
       "color_scheme": "dark",
       "content_color_scheme": "auto"
     },

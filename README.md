@@ -1,68 +1,71 @@
-# Grok Night
+<p align="center">
+  <img src="docs/img/icon-128.png" width="96" height="96" alt="Grok Night">
+</p>
 
-Thème Firefox aux couleurs de [grok.com](https://grok.com) : chrome noir, texte blanc, accent orange. Simple à installer, écrit pour aller jusqu’au bout du format.
+<h1 align="center">GROK NIGHT</h1>
 
-Pas un produit xAI. Marque originale (étoile + noyau orange).
+<p align="center">
+  Firefox, habillé comme <a href="https://grok.com">grok.com</a>.<br>
+  Void. Blanc. Une étincelle orange.
+</p>
 
-## Installer (30 secondes)
+<p align="center">
+  <img src="docs/img/hero.png" alt="Firefox with Grok Night — grok.com tab, orange address bar, void page" width="100%">
+</p>
 
-Firefox Release refuse un XPI non signé en permanent. Le chargement temporaire marche toujours :
+<p align="center">
+  <em>Unofficial. Not an xAI product. Original mark — not their logo.</em>
+</p>
+
+## Installer
+
+Firefox Release n’installe un thème **en permanent** que s’il est signé par Mozilla.
+
+**Maintenant, en local :**
 
 1. `about:debugging#/runtime/this-firefox`
 2. **Charger un module temporaire**
-3. choisir `theme/manifest.json`
-
-Ou :
+3. `theme/manifest.json`
 
 ```bash
-cd ~/github/firefox-theme-grok
-./scripts/build.sh          # régénère images + dist/grok-night.xpi
-./scripts/install-firefox.sh
+git clone git@github.com:ledutheo/firefox-theme-grok.git
+cd firefox-theme-grok
+# about:debugging → theme/manifest.json
 ```
 
-Pour du permanent : soumettre `dist/grok-night.xpi` sur [addons.mozilla.org](https://addons.mozilla.org/developers/) (thème listé ou unlisted signé).
+**Permanent :** soumettre `dist/grok-night.xpi` (via `./scripts/build.sh`) sur [addons.mozilla.org](https://addons.mozilla.org/developers/). Copier-coller : [`amo/listing.md`](amo/listing.md).
 
-Preview hors Firefox : ouvrir `preview.html`.
+English: same three clicks in `about:debugging`, then pick `theme/manifest.json`.
 
-## Ce que le thème fait
+## Ce que tu vois
 
-Tout ce que le schéma officiel `theme.json` (Firefox 154 / searchfox) autorise sur un thème **statique** :
+| | |
+|---|---|
+| Chrome | `#0A0A0A` void, `#141414` barres |
+| Texte | `#FCFCFC` / `#9E9E9E` |
+| Accent | `#FF6B35` — onglet actif, focus urlbar, icônes « attention » |
+| Pages web | intouchées (`content_color_scheme: auto`) |
+| about: / chrome Firefox | sombres (`color_scheme: dark`) |
 
-| Clé | Rôle |
-|-----|------|
-| `theme.colors.*` | les 40 couleurs chrome (onglets, toolbar, urlbar, popups, ntp, sidebar) |
-| `theme.images.theme_frame` | header 3000×200 |
-| `theme.images.additional_backgrounds` | halo orange (max 15 calques) |
-| `theme.properties.color_scheme` | `dark` pour about: / chrome |
-| `theme.properties.content_color_scheme` | `auto` — les sites restent les sites |
-| `dark_theme` | même nuit si l’OS est sombre |
-| `gecko` + `gecko_android` | desktop **et** Fennec / Firefox Android |
-| `_locales/fr` + `en` | nom / description |
+Le header n’est **pas** un sticker « GROK NIGHT » sur chaque fenêtre. Étoiles, halo, petite marque à droite. grok.com est du silence ; le chrome aussi.
 
-Les commentaires `//` dans `theme/manifest.json` documentent chaque propriété, y compris celles qu’on n’active pas (gradients CSS, `headerURL` mort depuis FF70, `toolbar_field_separator` ignoré depuis FF89).
+## Ce que le format permet vraiment
 
-Couleurs : `src/palette.json`. Images : `python3 src/generate.py`.
+Un thème statique **s’arrête aux couleurs et aux images**. Dès que `"theme"` est dans le manifest, Firefox ignore scripts et permissions.
 
-## Ce qu’un thème statique ne peut pas faire
+Ici, le paquet utilise tout le schéma officiel (`theme.json`, Firefox 154) : 39 couleurs, `theme_frame`, `dark_theme`, `gecko` + `gecko_android`, i18n fr/en. Chaque clé est commentée dans [`theme/manifest.json`](theme/manifest.json).
 
-Dès que `"theme"` est dans le manifest, Firefox **ignore** scripts et permissions. Les étages au-dessus sont dans `beyond/` :
+Au-dessus, dans [`beyond/`](beyond/) — pas dans le XPI listé :
 
-1. **`beyond/dynamic/`** — extension (permission `theme`) qui appelle `browser.theme.update()` Jour/Nuit selon l’heure.
-2. **`beyond/theme_experiment/`** — Nightly, pref `extensions.experiments.enabled`. Accroche n’importe quel sélecteur chrome.
-3. **`beyond/userChrome/`** — CSS de profil, pref `toolkit.legacyUserProfileCustomizations.stylesheets`.
-4. **`beyond/android/`** — Fennec : `gecko_android` est obligatoire pour AMO, l’effet chrome y reste mince.
+1. `browser.theme.update()` — jour / nuit à l’horloge  
+2. `theme_experiment` — Nightly, n’importe quel sélecteur chrome  
+3. `userChrome.css` — un profil, hors AMO  
+4. Fennec — `gecko_android` pour AMO ; le chrome Fenix ne repeint presque rien
 
-## Android / Fennec
+## English
 
-Le manifest déclare `gecko_android` (min 120). Sur Fennec F-Droid ça autorise l’install depuis AMO. Le chrome Fenix n’est pas Proton : n’attends pas le header 3000×200. Détail : `beyond/android/FENNEC.md`.
-
-## AMO
-
-- Type : **Thème** (pas extension).
-- ID figé : `grok-night@ledutheo`.
-- ZIP = contenu de `theme/`, pas le dossier parent (`scripts/build.sh` le fait).
-- `theme_experiment` volontairement **absent** du paquet listé.
+Unofficial Firefox theme in grok.com colors: black chrome, white type, orange spark. Load `theme/manifest.json` from `about:debugging`. Not an xAI product.
 
 ## Licence
 
-MIT. Couleurs observées sur grok.com / xAI, pas une charte officielle.
+MIT · [ledutheo](https://github.com/ledutheo) · [preview](https://ledutheo.github.io/firefox-theme-grok/)

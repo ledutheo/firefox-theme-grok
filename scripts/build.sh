@@ -28,7 +28,6 @@ keep_prefix = (
     "_locales/",
     "icons/",
     "images/theme_frame.png",
-    "images/glow.png",
 )
 with zipfile.ZipFile(xpi, "w", compression=zipfile.ZIP_DEFLATED) as zf:
     for path in sorted(theme.rglob("*")):

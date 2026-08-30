@@ -4,7 +4,7 @@
     "description": "Nom du thème dans about:addons et AMO."
   },
   "extensionDescription": {
-    "message": "Thème Firefox aux couleurs de grok.com : chrome noir, texte blanc, accent orange. Desktop + Android (Fennec).",
+    "message": "Firefox habillé comme grok.com : chrome void, texte blanc, étincelle orange. Non officiel.",
     "description": "Description courte AMO / about:addons."
   }
 }

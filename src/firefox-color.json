@@ -1,0 +1,27 @@
+{
+  "title": "Grok Night",
+  "colors": {
+    "frame": { "r": 10, "g": 10, "b": 10 },
+    "tab_background_text": { "r": 158, "g": 158, "b": 158 },
+    "tab_text": { "r": 252, "g": 252, "b": 252 },
+    "tab_line": { "r": 255, "g": 107, "b": 53 },
+    "tab_loading": { "r": 255, "g": 107, "b": 53 },
+    "tab_selected": { "r": 20, "g": 20, "b": 20 },
+    "toolbar": { "r": 20, "g": 20, "b": 20 },
+    "toolbar_text": { "r": 252, "g": 252, "b": 252 },
+    "toolbar_field": { "r": 17, "g": 17, "b": 17 },
+    "toolbar_field_text": { "r": 252, "g": 252, "b": 252 },
+    "toolbar_field_border": { "r": 42, "g": 42, "b": 42 },
+    "toolbar_field_border_focus": { "r": 255, "g": 107, "b": 53 },
+    "popup": { "r": 26, "g": 26, "b": 26 },
+    "popup_text": { "r": 252, "g": 252, "b": 252 },
+    "popup_highlight": { "r": 255, "g": 107, "b": 53 },
+    "popup_highlight_text": { "r": 10, "g": 10, "b": 10 },
+    "sidebar": { "r": 20, "g": 20, "b": 20 },
+    "sidebar_text": { "r": 252, "g": 252, "b": 252 },
+    "icons": { "r": 252, "g": 252, "b": 252 },
+    "icons_attention": { "r": 255, "g": 107, "b": 53 },
+    "ntp_background": { "r": 10, "g": 10, "b": 10 },
+    "ntp_text": { "r": 252, "g": 252, "b": 252 }
+  }
+}

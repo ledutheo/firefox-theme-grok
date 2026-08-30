@@ -11,7 +11,7 @@ import random
 import subprocess
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -22,10 +22,8 @@ PALETTE = json.loads((SRC / "palette.json").read_text(encoding="utf-8"))
 TOKENS = PALETTE["tokens"]
 
 FRAME_W, FRAME_H = 3000, 200
-MARK_ON_FRAME = 96
+MARK_ON_FRAME = 40
 ICON_SIZES = (16, 32, 48, 96, 128)
-FONT_LIGHT = Path("/usr/share/fonts/adobe-source-sans/SourceSansPro-ExtraLight.otf")
-FONT_REG = Path("/usr/share/fonts/adobe-source-sans/SourceSansPro-Regular.otf")
 
 
 def hex_to_rgb(value: str) -> tuple[int, int, int]:
@@ -93,42 +91,35 @@ def orange_bloom(size: tuple[int, int], color: tuple[int, int, int], cx: float, 
     return bloom
 
 
-def load_font(path: Path, size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
-    try:
-        return ImageFont.truetype(str(path), size=size)
-    except OSError:
-        return ImageFont.load_default()
-
-
 def paste_mark(frame: Image.Image, mark: Image.Image, xy: tuple[int, int]) -> None:
     frame.alpha_composite(mark.convert("RGBA"), xy)
 
 
 def make_frame(kind: str, mark: Image.Image) -> Image.Image:
+    """Chrome réel : void, étoiles, halo à droite, petite marque. Pas de billboard."""
     if kind == "night":
         left = hex_to_rgb(TOKENS["void"])
-        right = (26, 16, 12)
-        text = hex_to_rgb(TOKENS["text"])
-        dim = hex_to_rgb(TOKENS["text_dim"])
+        right = (22, 14, 12)
         accent = hex_to_rgb(TOKENS["accent"])
         star = (252, 252, 252)
         seed = 1975
+        n_stars = 160
+        bloom_a = 38
     else:
         left = hex_to_rgb(TOKENS["day_chrome"])
-        right = (252, 244, 238)
-        text = hex_to_rgb(TOKENS["day_text"])
-        dim = hex_to_rgb(TOKENS["day_text_dim"])
+        right = (250, 244, 238)
         accent = hex_to_rgb(TOKENS["day_accent"])
-        star = (80, 80, 80)
+        star = (90, 90, 90)
         seed = 2026
+        n_stars = 24
+        bloom_a = 28
 
     img = Image.new("RGBA", (FRAME_W, FRAME_H), (*left, 255))
     px = img.load()
     row = gradient_row(left, right, FRAME_W)
     for x, color in enumerate(row):
         for y in range(FRAME_H):
-            # léger vignettage vertical
-            v = 1.0 - abs((y / (FRAME_H - 1)) - 0.5) * 0.12
+            v = 1.0 - abs((y / (FRAME_H - 1)) - 0.5) * 0.08
             px[x, y] = (
                 int(color[0] * v),
                 int(color[1] * v),
@@ -136,33 +127,24 @@ def make_frame(kind: str, mark: Image.Image) -> Image.Image:
                 255,
             )
 
-    paint_stars(img, 220 if kind == "night" else 40, star, seed)
+    paint_stars(img, n_stars, star, seed)
     bloom = orange_bloom(
         (FRAME_W, FRAME_H),
         accent,
-        FRAME_W - 160,
+        FRAME_W - 120,
         FRAME_H / 2,
-        180,
-        70 if kind == "night" else 50,
+        150,
+        bloom_a,
     )
     img.alpha_composite(bloom)
 
-    mark_x = FRAME_W - MARK_ON_FRAME - 48
+    mark_x = FRAME_W - MARK_ON_FRAME - 36
     mark_y = (FRAME_H - MARK_ON_FRAME) // 2
-    paste_mark(img, mark.resize((MARK_ON_FRAME, MARK_ON_FRAME), Image.Resampling.LANCZOS), (mark_x, mark_y))
-
-    font = load_font(FONT_LIGHT, 42)
-    small = load_font(FONT_REG, 16)
-    draw = ImageDraw.Draw(img)
-    label = "GROK"
-    bbox = draw.textbbox((0, 0), label, font=font)
-    tw = bbox[2] - bbox[0]
-    tx = mark_x - 28 - tw
-    ty = (FRAME_H - (bbox[3] - bbox[1])) // 2 - 8
-    draw.text((tx, ty), label, font=font, fill=(*text, 230))
-    draw.text((tx + 2, ty + 44), "NIGHT" if kind == "night" else "DAY", font=small, fill=(*dim, 200))
-    # petite barre orange sous le mot
-    draw.rectangle((tx, ty + 40, tx + 36, ty + 42), fill=(*accent, 255))
+    paste_mark(
+        img,
+        mark.resize((MARK_ON_FRAME, MARK_ON_FRAME), Image.Resampling.LANCZOS),
+        (mark_x, mark_y),
+    )
     return img
 
 
