@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Grok Night — dynamique",
+  "version": "1.0.0",
+  "description": "Applique Grok Night / Grok Day selon l'heure via browser.theme.update(). Ce n'est PAS un thème statique : pas de clé \"theme\" ici, sinon Firefox ignore le script.",
+  "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
+  "icons": {
+    "48": "icon-48.png",
+    "96": "icon-96.png"
+  },
+  "permissions": ["theme", "alarms"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "grok-night-dynamic@ledutheo",
+      "strict_min_version": "115.0"
+    }
+  }
+}

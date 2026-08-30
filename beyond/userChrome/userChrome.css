@@ -1,0 +1,63 @@
+/* Grok Night — userChrome.css
+ *
+ * Ce n'est PAS un thème AMO. Ça repeint le chrome du profil.
+ *
+ * Activation :
+ *   1. about:config → toolkit.legacyUserProfileCustomizations.stylesheets = true
+ *   2. copier ce fichier dans <profil>/chrome/userChrome.css
+ *   3. redémarrer Firefox
+ *
+ * Trouver le profil : about:support → Dossier de profil.
+ * Sur cette machine : souvent ~/.mozilla/firefox/<id>.default-release/
+ *
+ * Fragile : les sélecteurs internes bougent. Re-tester après une maj majeure.
+ */
+
+:root {
+  --grok-void: #0A0A0A;
+  --grok-chrome: #141414;
+  --grok-text: #FCFCFC;
+  --grok-dim: #9E9E9E;
+  --grok-accent: #FF6B35;
+  --grok-line: #2A2A2A;
+}
+
+#navigator-toolbox {
+  background-color: var(--grok-void) !important;
+  border-bottom: 1px solid var(--grok-line) !important;
+}
+
+.tab-background {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.tabbrowser-tab[selected] .tab-background {
+  background-color: var(--grok-chrome) !important;
+  box-shadow: inset 0 -2px 0 var(--grok-accent) !important;
+}
+
+.tab-icon-overlay[busy],
+.tab-throbber {
+  fill: var(--grok-accent) !important;
+}
+
+#urlbar-background {
+  background-color: #111111 !important;
+  border: 1px solid var(--grok-line) !important;
+  border-radius: 999px !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  border-color: var(--grok-accent) !important;
+}
+
+#star-button[starred] {
+  fill: var(--grok-accent) !important;
+}
+
+menupopup,
+panel {
+  --panel-background: #1A1A1A !important;
+  --panel-color: var(--grok-text) !important;
+  --panel-border-color: var(--grok-line) !important;
+}

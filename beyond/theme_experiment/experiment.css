@@ -1,0 +1,44 @@
+/* theme_experiment stylesheet.
+ *
+ * Firefox mappe tes clés theme.colors.* vers des variables CSS,
+ * puis cette feuille les accroche aux sélecteurs INTERNES du chrome.
+ * Les sélecteurs ci-dessous existent dans le browser.xhtml actuel
+ * (Photon / Proton). Ils peuvent bouger d'une version à l'autre.
+ *
+ * Ne se charge que si extensions.experiments.enabled = true.
+ */
+
+:root {
+  --grok-accent: var(--grok-exp-accent, #FF6B35);
+  --grok-void: var(--grok-exp-void, #0A0A0A);
+}
+
+#urlbar-background {
+  background-color: var(--grok-exp-urlbar, #111111) !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  outline: 1px solid var(--grok-accent) !important;
+  outline-offset: -1px;
+}
+
+#reload-button,
+#stop-reload-button {
+  fill: var(--grok-accent) !important;
+}
+
+.tab-loading-burst {
+  background-image: none !important;
+}
+
+#navigator-toolbox {
+  border-bottom: 1px solid color-mix(in srgb, var(--grok-accent) 40%, transparent) !important;
+}
+
+#identity-box {
+  fill: var(--grok-accent) !important;
+}
+
+.browser-toolbar {
+  background-image: none !important;
+}

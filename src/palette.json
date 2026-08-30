@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "name": "Grok Night",
+    "note": "Couleurs observées sur grok.com (sombre-first) + accent orange xAI. Pas une charte officielle xAI.",
+    "sources": [
+      "grok.com dark UI: fond ~#0a0a0a / #141414, texte #FCFCFC, secondaire #9E9E9E, accent #FF6B35",
+      "xAI brandfetch: #000000 / #FFFFFF / #FF6E25",
+      "Grok TUI GrokNight: bg #141414, fg #e1e1e1"
+    ]
+  },
+  "tokens": {
+    "void": "#0A0A0A",
+    "chrome": "#141414",
+    "chrome_inactive": "#0C0C0C",
+    "panel": "#1A1A1A",
+    "elevated": "#242424",
+    "line": "#2A2A2A",
+    "field": "#111111",
+    "text": "#FCFCFC",
+    "text_dim": "#9E9E9E",
+    "text_mute": "#6C6C6C",
+    "accent": "#FF6B35",
+    "accent_hot": "#FF6E25",
+    "accent_soft": "#C24F28",
+    "day_void": "#F5F5F5",
+    "day_chrome": "#EEEEEE",
+    "day_panel": "#FFFFFF",
+    "day_elevated": "#E4E4E4",
+    "day_line": "#D0D0D0",
+    "day_field": "#FFFFFF",
+    "day_text": "#141414",
+    "day_text_dim": "#4A4A4A",
+    "day_accent": "#CF5200"
+  }
+}

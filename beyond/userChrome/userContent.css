@@ -1,0 +1,14 @@
+/* about:newtab / about:home — même void que grok.com.
+ * Même activation que userChrome.css (même pref, même dossier chrome/).
+ */
+@-moz-document url("about:home"), url("about:newtab"), url("about:privatebrowsing") {
+  body {
+    background-color: #0A0A0A !important;
+    color: #FCFCFC !important;
+  }
+  .search-wrapper input {
+    background-color: #111111 !important;
+    color: #FCFCFC !important;
+    border: 1px solid #2A2A2A !important;
+  }
+}

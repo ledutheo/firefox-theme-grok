@@ -1,0 +1,197 @@
+{
+  // Grok Night — thème statique Firefox.
+  //
+  // Ce fichier EST le thème. Si la clé "theme" est présente, Firefox
+  // classe l'addon comme thème et IGNORERA scripts, permissions, etc.
+  // Pour aller plus loin (horloge, experiment, userChrome) → ../beyond/
+  //
+  // JSONC : Firefox et addons-linter acceptent les commentaires //.
+  // Schéma officiel : toolkit/components/extensions/schemas/theme.json
+  // (searchfox firefox-main, août 2026).
+  //
+  // Android : pas de noms CSS ("black"), pas de #RGB, pas d'alpha #RRGGBBAA.
+  // Uniquement #RRGGBB ou [r,g,b] / [r,g,b,a]. Ici : #RRGGBB partout.
+
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.0.0",
+  "default_locale": "fr",
+  "author": "ledutheo",
+  "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "grok-night@ledutheo",
+      "strict_min_version": "115.0"
+    },
+    // Fennec F-Droid / Firefox Android (Fenix). Sans gecko_android,
+    // AMO ne propose pas le thème sur mobile. L'effet chrome y est
+    // limité (voir beyond/android/).
+    "gecko_android": {
+      "id": "grok-night@ledutheo",
+      "strict_min_version": "120.0"
+    }
+  },
+
+  "theme": {
+    "images": {
+      // theme_frame : calque principal, ancré en haut à droite, ~200 px de haut.
+      // Formats : JPEG, PNG, APNG, SVG, GIF (GIF animé : non).
+      // Alternative Firefox récente (schema ThemeCSSGradient) :
+      //   "theme_frame": { "linear-gradient": "90deg, #0A0A0A, #1A100C" }
+      //   aussi : radial-gradient, conic-gradient, repeating-*.
+      "theme_frame": "images/theme_frame.png",
+      // Jusqu'à 15 calques. Dessinés AU-DESSUS de theme_frame.
+      // Peuvent être un chemin d'image OU un objet gradient.
+      "additional_backgrounds": [
+        "images/glow.png"
+      ]
+      // headerURL : alias mort depuis Firefox 70. Ne plus l'utiliser.
+    },
+    "properties": {
+      // Où le décor se peint : auto | window | top_toolbars
+      "backgrounds_area": "top_toolbars",
+      // Un alignement par calque additional_backgrounds (max 15).
+      "additional_backgrounds_alignment": ["right top"],
+      // no-repeat | repeat | repeat-x | repeat-y
+      "additional_backgrounds_tiling": ["no-repeat"],
+      // Taille CSS (cover, contain, 200px, 40% 100%…). Schéma : tableau de strings.
+      "additional_backgrounds_size": ["auto 200px"],
+      // Chrome Firefox (about:, panneaux) : auto | light | dark | system
+      "color_scheme": "dark",
+      // Pages web : on laisse le site / l'OS décider.
+      "content_color_scheme": "auto"
+    },
+    "colors": {
+      // ——— Fenêtre / onglets ———
+      // frame : fond de la barre de titre / zone d'onglets (ex-accentcolor, mort FF70)
+      "frame": "#0A0A0A",
+      "frame_inactive": "#0C0C0C",
+      // Texte des onglets inactifs. Si tab_text absent, aussi l'onglet actif.
+      "tab_background_text": "#9E9E9E",
+      "tab_background_separator": "#2A2A2A",
+      "tab_text": "#FCFCFC",
+      "tab_line": "#FF6B35",
+      "tab_loading": "#FF6B35",
+      "tab_selected": "#141414",
+
+      // ——— Barre d'outils ———
+      "toolbar": "#141414",
+      // toolbar_text est un alias de bookmark_text (schema). On pose les deux.
+      "toolbar_text": "#FCFCFC",
+      "bookmark_text": "#FCFCFC",
+      "toolbar_top_separator": "#0A0A0A",
+      "toolbar_bottom_separator": "#2A2A2A",
+      "toolbar_vertical_separator": "#2A2A2A",
+
+      // ——— Champ d'adresse / recherche ———
+      "toolbar_field": "#111111",
+      "toolbar_field_text": "#FCFCFC",
+      "toolbar_field_border": "#2A2A2A",
+      "toolbar_field_focus": "#1A1A1A",
+      "toolbar_field_text_focus": "#FCFCFC",
+      "toolbar_field_border_focus": "#FF6B35",
+      "toolbar_field_highlight": "#FF6B35",
+      "toolbar_field_highlight_text": "#0A0A0A",
+      // toolbar_field_separator : ignoré depuis Firefox 89.
+
+      // ——— Icônes chrome ———
+      "icons": "#FCFCFC",
+      "icons_attention": "#FF6B35",
+      "button_background_hover": "#242424",
+      "button_background_active": "#2A2A2A",
+
+      // ——— Menus / popups ———
+      "popup": "#1A1A1A",
+      "popup_text": "#FCFCFC",
+      "popup_border": "#2A2A2A",
+      "popup_highlight": "#FF6B35",
+      "popup_highlight_text": "#0A0A0A",
+
+      // ——— Nouvelle page (about:newtab / about:home) ———
+      "ntp_background": "#0A0A0A",
+      "ntp_card_background": "#1A1A1A",
+      "ntp_text": "#FCFCFC",
+
+      // ——— Barre latérale ———
+      "sidebar": "#141414",
+      "sidebar_border": "#2A2A2A",
+      "sidebar_text": "#FCFCFC",
+      "sidebar_highlight": "#FF6B35",
+      "sidebar_highlight_text": "#0A0A0A"
+    }
+  },
+
+  // dark_theme : utilisé quand l'OS est en mode sombre.
+  // Ici = même nuit (grok.com est dark-first). Pour suivre l'OS
+  // (jour clair / nuit sombre), remplace "theme" par la variante Day
+  // dans src/palette.json + images/theme_frame_day.png
+  // (cf. beyond/dynamic/ qui le fait à l'horloge).
+  "dark_theme": {
+    "images": {
+      "theme_frame": "images/theme_frame.png",
+      "additional_backgrounds": ["images/glow.png"]
+    },
+    "properties": {
+      "backgrounds_area": "top_toolbars",
+      "additional_backgrounds_alignment": ["right top"],
+      "additional_backgrounds_tiling": ["no-repeat"],
+      "additional_backgrounds_size": ["auto 200px"],
+      "color_scheme": "dark",
+      "content_color_scheme": "auto"
+    },
+    "colors": {
+      "frame": "#0A0A0A",
+      "frame_inactive": "#0C0C0C",
+      "tab_background_text": "#9E9E9E",
+      "tab_background_separator": "#2A2A2A",
+      "tab_text": "#FCFCFC",
+      "tab_line": "#FF6B35",
+      "tab_loading": "#FF6B35",
+      "tab_selected": "#141414",
+      "toolbar": "#141414",
+      "toolbar_text": "#FCFCFC",
+      "bookmark_text": "#FCFCFC",
+      "toolbar_top_separator": "#0A0A0A",
+      "toolbar_bottom_separator": "#2A2A2A",
+      "toolbar_vertical_separator": "#2A2A2A",
+      "toolbar_field": "#111111",
+      "toolbar_field_text": "#FCFCFC",
+      "toolbar_field_border": "#2A2A2A",
+      "toolbar_field_focus": "#1A1A1A",
+      "toolbar_field_text_focus": "#FCFCFC",
+      "toolbar_field_border_focus": "#FF6B35",
+      "toolbar_field_highlight": "#FF6B35",
+      "toolbar_field_highlight_text": "#0A0A0A",
+      "icons": "#FCFCFC",
+      "icons_attention": "#FF6B35",
+      "button_background_hover": "#242424",
+      "button_background_active": "#2A2A2A",
+      "popup": "#1A1A1A",
+      "popup_text": "#FCFCFC",
+      "popup_border": "#2A2A2A",
+      "popup_highlight": "#FF6B35",
+      "popup_highlight_text": "#0A0A0A",
+      "ntp_background": "#0A0A0A",
+      "ntp_card_background": "#1A1A1A",
+      "ntp_text": "#FCFCFC",
+      "sidebar": "#141414",
+      "sidebar_border": "#2A2A2A",
+      "sidebar_text": "#FCFCFC",
+      "sidebar_highlight": "#FF6B35",
+      "sidebar_highlight_text": "#0A0A0A"
+    }
+  }
+
+  // PAS de theme_experiment ici : ça demande
+  //   extensions.experiments.enabled = true
+  // et AMO refuse souvent les thèmes listés avec experiment.
+  // Copie working : beyond/theme_experiment/
+}

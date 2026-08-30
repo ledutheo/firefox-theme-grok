@@ -1,0 +1,10 @@
+{
+  "extensionName": {
+    "message": "Grok Night",
+    "description": "Nom du thème dans about:addons et AMO."
+  },
+  "extensionDescription": {
+    "message": "Thème Firefox aux couleurs de grok.com : chrome noir, texte blanc, accent orange. Desktop + Android (Fennec).",
+    "description": "Description courte AMO / about:addons."
+  }
+}

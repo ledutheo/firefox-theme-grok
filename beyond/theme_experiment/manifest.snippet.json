@@ -1,0 +1,24 @@
+{
+  "comment": "À fusionner dans un manifest de thème UNIQUEMENT en Nightly/Dev, pref extensions.experiments.enabled = true. AMO listed : ne pas soumettre ça.",
+  "theme_experiment": {
+    "stylesheet": "experiment.css",
+    "colors": {
+      "grok_exp_accent": "--grok-exp-accent",
+      "grok_exp_void": "--grok-exp-void",
+      "grok_exp_urlbar": "--grok-exp-urlbar"
+    },
+    "images": {
+      "grok_toolbar": "--toolbar-bgimage"
+    },
+    "properties": {
+      "grok_toolbar_align": "--toolbar-bgalignment"
+    }
+  },
+  "theme": {
+    "colors": {
+      "grok_exp_accent": "#FF6B35",
+      "grok_exp_void": "#0A0A0A",
+      "grok_exp_urlbar": "#111111"
+    }
+  }
+}
