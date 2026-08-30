@@ -55,9 +55,29 @@
   fill: var(--grok-accent) !important;
 }
 
+#identity-box {
+  fill: var(--grok-accent) !important;
+}
+
+.findbar-textbox {
+  background: #111111 !important;
+  color: var(--grok-text) !important;
+  border: 1px solid var(--grok-line) !important;
+}
+
+.findbar-textbox[focused="true"] {
+  border-color: var(--grok-accent) !important;
+}
+
 menupopup,
 panel {
   --panel-background: #1A1A1A !important;
   --panel-color: var(--grok-text) !important;
   --panel-border-color: var(--grok-line) !important;
+  --panel-border-radius: 10px !important;
+}
+
+.sidebar-header {
+  background: var(--grok-chrome) !important;
+  color: var(--grok-text) !important;
 }

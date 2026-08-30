@@ -13,6 +13,12 @@
   <img src="docs/img/hero.png" alt="Grok Night dans Firefox" width="100%">
 </p>
 
+<p align="center">
+  <a href="https://ledutheo.github.io/firefox-theme-grok/">landing + vidéo</a>
+  ·
+  <a href="https://github.com/ledutheo/firefox-theme-grok/releases">XPI</a>
+</p>
+
 ## Installer
 
 1. `about:debugging#/runtime/this-firefox`
@@ -24,7 +30,9 @@ git clone git@github.com:ledutheo/firefox-theme-grok.git
 cd firefox-theme-grok
 ```
 
-Permanent : `./scripts/build.sh` → `dist/grok-night.xpi` sur [AMO](https://addons.mozilla.org/developers/). Texte prêt : [`amo/listing.md`](amo/listing.md).
+Permanent : `./scripts/build.sh` → `dist/grok-night.xpi` sur [AMO](https://addons.mozilla.org/developers/). Texte prêt : [`amo/listing.md`](amo/listing.md). XPI déjà coupé : [Releases](https://github.com/ledutheo/firefox-theme-grok/releases) (Firefox Release le refuse non signé ; ESR / Dev / `about:debugging` OK).
+
+Aller plus loin dans le chrome : `./scripts/install-userchrome.sh`
 
 ## Le chrome
 

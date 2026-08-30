@@ -7,7 +7,9 @@ THEME="$ROOT/theme"
 DIST="$ROOT/dist"
 XPI="$DIST/grok-night.xpi"
 
+python3 "$ROOT/scripts/lint.py"
 python3 "$ROOT/src/generate.py"
+"$ROOT/scripts/prep-dynamic.sh" >/dev/null
 
 mkdir -p "$DIST"
 python3 - "$THEME" "$XPI" <<'PY'

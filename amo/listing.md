@@ -3,7 +3,7 @@
 Type : **Thème** (pas extension).  
 ID : `grok-night@ledutheo`  
 Fichier : `dist/grok-night.xpi` (`./scripts/build.sh`)  
-Capture : `docs/img/hero.png` (1280×800)
+Captures : `docs/img/hero.png` (chrome, 1280×800), `docs/img/menu.png` (popup), `docs/img/void.png` (page)
 
 ## Name
 
