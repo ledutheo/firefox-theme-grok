@@ -30,7 +30,7 @@ git clone git@github.com:ledutheo/firefox-theme-grok.git
 cd firefox-theme-grok
 ```
 
-Permanent : `./scripts/build.sh` → `dist/grok-night.xpi` sur [AMO](https://addons.mozilla.org/developers/). Texte prêt : [`amo/listing.md`](amo/listing.md). XPI déjà coupé : [Releases](https://github.com/ledutheo/firefox-theme-grok/releases) (Firefox Release le refuse non signé ; ESR / Dev / `about:debugging` OK).
+Permanent : marche AMO point par point dans [`amo/SOUMETTRE.md`](amo/SOUMETTRE.md). Texte : [`amo/listing.md`](amo/listing.md). XPI : `./scripts/build.sh` → `dist/grok-night.xpi` ou les [Releases](https://github.com/ledutheo/firefox-theme-grok/releases).
 
 Aller plus loin dans le chrome : `./scripts/install-userchrome.sh`
 

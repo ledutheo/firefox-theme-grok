@@ -22,7 +22,10 @@ PALETTE = json.loads((SRC / "palette.json").read_text(encoding="utf-8"))
 TOKENS = PALETTE["tokens"]
 
 FRAME_W, FRAME_H = 3000, 200
-MARK_ON_FRAME = 40
+# Le chrome visible (onglets) fait ~40–48 px de haut. Tout ce qui est
+# plus bas dans l'image 200 px disparaît. Identité collée en haut à droite.
+MARK_ON_FRAME = 32
+TAB_STRIP = 48
 ICON_SIZES = (16, 32, 48, 96, 128)
 
 
@@ -127,19 +130,24 @@ def make_frame(kind: str, mark: Image.Image) -> Image.Image:
                 255,
             )
 
+    # Étoiles surtout dans la bande d'onglets (haut), pas au milieu de l'image.
     paint_stars(img, n_stars, star, seed)
     bloom = orange_bloom(
         (FRAME_W, FRAME_H),
         accent,
-        FRAME_W - 120,
-        FRAME_H / 2,
-        150,
-        bloom_a,
+        FRAME_W - 90,
+        TAB_STRIP / 2,
+        90,
+        bloom_a + 16,
     )
     img.alpha_composite(bloom)
 
-    mark_x = FRAME_W - MARK_ON_FRAME - 36
-    mark_y = (FRAME_H - MARK_ON_FRAME) // 2
+    # Filet orange type grok.com, collé au bord haut — toujours visible.
+    draw = ImageDraw.Draw(img)
+    draw.rectangle((0, 0, FRAME_W, 2), fill=(*accent, 220))
+
+    mark_x = FRAME_W - MARK_ON_FRAME - 14
+    mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2
     paste_mark(
         img,
         mark.resize((MARK_ON_FRAME, MARK_ON_FRAME), Image.Resampling.LANCZOS),
@@ -200,6 +208,12 @@ def main() -> None:
     make_frame("day", mark_128).save(IMAGES / "theme_frame_day.png", "PNG")
     make_glow().save(IMAGES / "glow.png", "PNG")
     make_android_status().save(IMAGES / "android_status.png", "PNG")
+    # Calque 48×48, coin haut-droit des onglets (additional_backgrounds).
+    spark = Image.open(ICONS / "icon-48.png").convert("RGBA")
+    spark.save(IMAGES / "spark.png", "PNG")
+    # Bande visible seule, pour juger sans Firefox.
+    frame = Image.open(IMAGES / "theme_frame.png")
+    frame.crop((FRAME_W - 1280, 0, FRAME_W, TAB_STRIP)).save(IMAGES / "strip-preview.png", "PNG")
     write_css_preview()
     print(f"icônes : {', '.join(str(s) for s in ICON_SIZES)}")
     print(f"images : {IMAGES}")
