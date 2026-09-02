@@ -26,6 +26,9 @@ FRAME_W, FRAME_H = 3000, 200
 # plus bas dans l'image 200 px disparaît. Identité collée en haut à droite.
 MARK_ON_FRAME = 32
 TAB_STRIP = 48
+# Linux CSD : min / max / close occupent ~140–160 px à droite.
+# additional_backgrounds "right top" tombait SUR la croix — on ne l'utilise plus.
+WINDOW_CONTROLS = 172
 ICON_SIZES = (16, 32, 48, 96, 128)
 
 
@@ -151,14 +154,14 @@ def make_frame(kind: str, mark: Image.Image) -> Image.Image:
     bloom = orange_bloom(
         (FRAME_W, FRAME_H),
         accent,
-        FRAME_W - 90,
+        FRAME_W - WINDOW_CONTROLS - MARK_ON_FRAME / 2,
         TAB_STRIP / 2,
-        90,
-        bloom_a + 16,
+        70,
+        bloom_a + 10,
     )
     img.alpha_composite(bloom)
 
-    mark_x = FRAME_W - MARK_ON_FRAME - 14
+    mark_x = FRAME_W - WINDOW_CONTROLS - MARK_ON_FRAME
     mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2
     paste_mark(
         img,

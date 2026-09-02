@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -47,18 +47,15 @@
       // Alternative Firefox récente (schema ThemeCSSGradient) :
       //   "theme_frame": { "linear-gradient": "90deg, #0A0A0A, #1A100C" }
       //   aussi : radial-gradient, conic-gradient, repeating-*.
-      "theme_frame": "images/theme_frame.png",
-      // spark = marque (étoile + noyau), collée en haut à droite des onglets.
-      // Sans ça, l'identité se perd dans les 200 px de theme_frame.
-      "additional_backgrounds": ["images/spark.png"]
+      "theme_frame": "images/theme_frame.png"
+      // Pas de additional_backgrounds à "right top" : ça recouvre
+      // min/max/close (la croix). La marque est dans theme_frame,
+      // décalée de ~172 px du bord droit.
       // headerURL : alias mort depuis Firefox 70. Ne plus l'utiliser.
     },
     "properties": {
       // Où le décor se peint : auto | window | top_toolbars
       "backgrounds_area": "top_toolbars",
-      "additional_backgrounds_alignment": ["right top"],
-      "additional_backgrounds_tiling": ["no-repeat"],
-      "additional_backgrounds_size": ["48px 48px"],
       // Chrome Firefox (about:, panneaux) : auto | light | dark | system
       "color_scheme": "dark",
       // Pages web : on laisse le site / l'OS décider.
@@ -131,14 +128,10 @@
   // (cf. beyond/dynamic/ qui le fait à l'horloge).
   "dark_theme": {
     "images": {
-      "theme_frame": "images/theme_frame.png",
-      "additional_backgrounds": ["images/spark.png"]
+      "theme_frame": "images/theme_frame.png"
     },
     "properties": {
       "backgrounds_area": "top_toolbars",
-      "additional_backgrounds_alignment": ["right top"],
-      "additional_backgrounds_tiling": ["no-repeat"],
-      "additional_backgrounds_size": ["48px 48px"],
       "color_scheme": "dark",
       "content_color_scheme": "auto"
     },
