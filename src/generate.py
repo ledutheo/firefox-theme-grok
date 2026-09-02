@@ -7,6 +7,7 @@ Sortie : theme/icons/ et theme/images/
 from __future__ import annotations
 
 import json
+import math
 import random
 import subprocess
 from pathlib import Path
@@ -85,18 +86,36 @@ def gradient_row(left: tuple[int, int, int], right: tuple[int, int, int], width:
     ]
 
 
-def paint_stars(img: Image.Image, count: int, color: tuple[int, int, int], seed: int) -> None:
+def star_catalog(count: int, seed: int, y_max: int) -> list[tuple[int, int, int, int, float]]:
+    """x, y, rayon, alpha_base, phase — pour faire clignoter sans tout recréer."""
     rng = random.Random(seed)
-    draw = ImageDraw.Draw(img)
-    w, h = img.size
+    stars = []
     for _ in range(count):
-        x = rng.randint(0, w - 1)
-        y = rng.randint(0, h - 1)
-        r = rng.choice((0, 0, 0, 1, 1, 2))
-        a = rng.randint(40, 180)
-        star = Image.new("RGBA", img.size, (0, 0, 0, 0))
-        ImageDraw.Draw(star).ellipse((x - r, y - r, x + r, y + r), fill=(*color, a))
-        img.alpha_composite(star)
+        stars.append(
+            (
+                rng.randint(0, FRAME_W - 1),
+                rng.randint(3, y_max),
+                rng.choice((0, 0, 0, 1, 1, 2)),
+                rng.randint(50, 200),
+                rng.random() * 6.28,
+            )
+        )
+    return stars
+
+
+def paint_star_catalog(
+    img: Image.Image,
+    stars: list[tuple[int, int, int, int, float]],
+    color: tuple[int, int, int],
+    t: float,
+) -> None:
+    overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(overlay)
+    for x, y, r, base, phase in stars:
+        pulse = 0.45 + 0.55 * (0.5 + 0.5 * math.sin(t * 2.2 + phase))
+        a = max(20, min(255, int(base * pulse)))
+        draw.ellipse((x - r, y - r, x + r, y + r), fill=(*color, a))
+    img.alpha_composite(overlay)
 
 
 def orange_bloom(size: tuple[int, int], color: tuple[int, int, int], cx: float, cy: float, radius: float, alpha: int) -> Image.Image:
@@ -117,24 +136,42 @@ def paste_mark(frame: Image.Image, mark: Image.Image, xy: tuple[int, int]) -> No
     frame.alpha_composite(mark.convert("RGBA"), xy)
 
 
-def make_frame(kind: str, mark: Image.Image) -> Image.Image:
-    """Chrome réel : void, étoiles, halo à droite, petite marque. Pas de billboard."""
+def load_logo_variants(size: int) -> list[Image.Image]:
+    """Variantes du dossier src/logos + trou noir photoreal. Recadrage circulaire."""
+    names = ["wood.jpg", "fur.jpg", "vortex.jpg", "phi.jpg", "seal.jpg"]
+    out: list[Image.Image] = []
+    photo = SRC / "blackhole.jpg"
+    if photo.is_file():
+        circle_from_photo(photo, size, ICONS / "_tmp_bh.png")
+        out.append(Image.open(ICONS / "_tmp_bh.png").convert("RGBA"))
+    for name in names:
+        path = SRC / "logos" / name
+        if path.is_file():
+            dest = ICONS / f"_tmp_{path.stem}.png"
+            circle_from_photo(path, size, dest)
+            out.append(Image.open(dest).convert("RGBA"))
+    return out
+
+
+def make_frame(
+    kind: str,
+    logos: list[Image.Image],
+    stars: list[tuple[int, int, int, int, float]],
+    t: float = 0.0,
+) -> Image.Image:
+    """Bande d'onglets : barre blanche, ciel d'étoiles, logos à gauche des boutons."""
     if kind == "night":
         left = hex_to_rgb(TOKENS["void"])
-        right = (22, 14, 12)
+        right = (18, 14, 16)
         accent = hex_to_rgb(TOKENS["accent"])
         star = (252, 252, 252)
-        seed = 1975
-        n_stars = 160
-        bloom_a = 38
+        bloom_a = 28
     else:
         left = hex_to_rgb(TOKENS["day_chrome"])
         right = (250, 244, 238)
         accent = hex_to_rgb(TOKENS["day_accent"])
         star = (90, 90, 90)
-        seed = 2026
-        n_stars = 24
-        bloom_a = 28
+        bloom_a = 18
 
     img = Image.new("RGBA", (FRAME_W, FRAME_H), (*left, 255))
     px = img.load()
@@ -149,26 +186,70 @@ def make_frame(kind: str, mark: Image.Image) -> Image.Image:
                 255,
             )
 
-    # Étoiles surtout dans la bande d'onglets (haut), pas au milieu de l'image.
-    paint_stars(img, n_stars, star, seed)
-    bloom = orange_bloom(
-        (FRAME_W, FRAME_H),
-        accent,
-        FRAME_W - WINDOW_CONTROLS - MARK_ON_FRAME / 2,
-        TAB_STRIP / 2,
-        70,
-        bloom_a + 10,
-    )
-    img.alpha_composite(bloom)
+    paint_star_catalog(img, stars, star, t)
 
-    mark_x = FRAME_W - WINDOW_CONTROLS - MARK_ON_FRAME
-    mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2
-    paste_mark(
-        img,
-        mark.resize((MARK_ON_FRAME, MARK_ON_FRAME), Image.Resampling.LANCZOS),
-        (mark_x, mark_y),
-    )
+    mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2 + 2
+    gap = MARK_ON_FRAME + 10
+    # de droite à gauche, en laissant la place des boutons de fenêtre
+    for i, logo in enumerate(logos):
+        mark_x = FRAME_W - WINDOW_CONTROLS - MARK_ON_FRAME - i * gap
+        if mark_x < 80:
+            break
+        glow = 0.75 + 0.25 * (0.5 + 0.5 * math.sin(t * 1.4 + i * 0.9))
+        sized = logo.resize((MARK_ON_FRAME, MARK_ON_FRAME), Image.Resampling.LANCZOS)
+        if glow < 0.98:
+            faded = Image.new("RGBA", sized.size, (0, 0, 0, 0))
+            faded.paste(sized, (0, 0))
+            alpha = faded.split()[-1].point(lambda a: int(a * glow))
+            faded.putalpha(alpha)
+            sized = faded
+        cx = mark_x + MARK_ON_FRAME / 2
+        img.alpha_composite(
+            orange_bloom(
+                (FRAME_W, FRAME_H),
+                accent,
+                cx,
+                TAB_STRIP / 2,
+                36,
+                int(bloom_a * glow),
+            )
+        )
+        paste_mark(img, sized, (mark_x, mark_y))
+
+    # Barre blanche collée au sommet de la fenêtre (demandée).
+    ImageDraw.Draw(img).rectangle((0, 0, FRAME_W, 2), fill=(252, 252, 252, 255))
     return img
+
+
+def write_apng(frames: list[Image.Image], dest: Path, fps: int = 8) -> None:
+    """Firefox n'anime pas les GIF dans un thème. L'équivalent AMO, c'est l'APNG."""
+    tmp = dest.parent / "_apng_frames"
+    tmp.mkdir(exist_ok=True)
+    for i, frame in enumerate(frames):
+        frame.convert("RGBA").save(tmp / f"{i:02d}.png", "PNG")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-hide_banner",
+            "-loglevel",
+            "error",
+            "-framerate",
+            str(fps),
+            "-i",
+            str(tmp / "%02d.png"),
+            "-plays",
+            "0",
+            "-f",
+            "apng",
+            str(dest),
+        ],
+        check=True,
+    )
+    for leftover in tmp.glob("*.png"):
+        leftover.unlink()
+    tmp.rmdir()
 
 
 def make_glow() -> Image.Image:
@@ -231,9 +312,19 @@ def main() -> None:
         Image.open(wall).convert("RGB").save(newtab / "wallpaper.jpg", "JPEG", quality=88)
         circle_from_photo(photo, 256, newtab / "mark.png")
 
-    mark_128 = Image.open(ICONS / "icon-128.png")
-    make_frame("night", mark_128).save(IMAGES / "theme_frame.png", "PNG")
-    make_frame("day", mark_128).save(IMAGES / "theme_frame_day.png", "PNG")
+    logos = load_logo_variants(MARK_ON_FRAME)
+    stars_night = star_catalog(520, seed=1975, y_max=TAB_STRIP - 2)
+    stars_day = star_catalog(80, seed=2026, y_max=TAB_STRIP - 2)
+    n_frames = 8
+    night_frames = [
+        make_frame("night", logos, stars_night, t=i / n_frames * 6.28)
+        for i in range(n_frames)
+    ]
+    write_apng(night_frames, IMAGES / "theme_frame.png", fps=7)
+    make_frame("day", logos, stars_day, t=0).save(IMAGES / "theme_frame_day.png", "PNG")
+    night_frames[0].save(IMAGES / "theme_frame_still.png", "PNG")
+    for junk in ICONS.glob("_tmp_*.png"):
+        junk.unlink()
     make_glow().save(IMAGES / "glow.png", "PNG")
     # filet blanc, pas orange — chrome façon logo Grok (noir / blanc)
     status = Image.new("RGB", (1080, 80), hex_to_rgb(TOKENS["void"]))
@@ -243,8 +334,9 @@ def main() -> None:
     spark = Image.open(ICONS / "icon-48.png").convert("RGBA")
     spark.save(IMAGES / "spark.png", "PNG")
     # Bande visible seule, pour juger sans Firefox.
-    frame = Image.open(IMAGES / "theme_frame.png")
-    frame.crop((FRAME_W - 1280, 0, FRAME_W, TAB_STRIP)).save(IMAGES / "strip-preview.png", "PNG")
+    night_frames[0].crop((FRAME_W - 1280, 0, FRAME_W, TAB_STRIP)).save(
+        IMAGES / "strip-preview.png", "PNG"
+    )
     write_css_preview()
     print(f"icônes : {', '.join(str(s) for s in ICON_SIZES)}")
     print(f"images : {IMAGES}")

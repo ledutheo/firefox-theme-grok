@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -47,6 +47,7 @@
       // Alternative Firefox récente (schema ThemeCSSGradient) :
       //   "theme_frame": { "linear-gradient": "90deg, #0A0A0A, #1A100C" }
       //   aussi : radial-gradient, conic-gradient, repeating-*.
+      // APNG animé (les GIF animés sont refusés par Firefox dans un thème).
       "theme_frame": "images/theme_frame.png"
       // Pas de additional_backgrounds à "right top" : ça recouvre
       // min/max/close (la croix). La marque est dans theme_frame,
