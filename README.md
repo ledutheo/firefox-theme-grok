@@ -36,8 +36,9 @@ Aller plus loin dans le chrome : `./scripts/install-userchrome.sh`
 
 ## Le chrome
 
-Void `#0A0A0A`. Barres `#141414`. Texte `#FCFCFC`. Une étincelle `#FF6B35`.  
-Pas un sticker sur chaque fenêtre : étoiles, halo, petite marque. Grok est du silence — le navigateur aussi.
+Chrome **noir / blanc**, comme le style du logo. La seule couleur, c’est le **trou noir** (disque d’accrétion) à droite des onglets et en icône.
+
+Un thème ne peut **pas** coller un fond + du texte sur `about:newtab`. Pour ça : second module `beyond/newtab/` (raccourcis grok.com / Grok Build). Même `about:debugging`, fichier `beyond/newtab/manifest.json`.
 
 Les sites restent les sites. Le chrome Firefox, lui, est à nous.
 

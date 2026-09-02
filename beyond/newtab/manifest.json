@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Grok Night — nouvel onglet",
+  "version": "1.5.0",
+  "description": "Page nouvel onglet : trou noir + raccourcis grok.com / Grok Build. Companion du thème Grok Night (un thème ne peut pas remplacer about:newtab).",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "icons": {
+    "48": "mark.png",
+    "96": "mark.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "grok-night-newtab@ledutheo",
+      "strict_min_version": "115.0"
+    }
+  }
+}

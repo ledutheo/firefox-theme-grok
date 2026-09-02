@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Grok Night mark">
-  <!--
-    Marque originale pour le thème (pas le logo xAI).
-    Étoile à 4 branches + noyau orange grok.com — lisible à 16 px.
-  -->
-  <rect width="128" height="128" rx="28" fill="#0A0A0A"/>
-  <path fill="#FCFCFC" d="M64 10 L76 52 L118 64 L76 76 L64 118 L52 76 L10 64 L52 52 Z"/>
-  <circle cx="64" cy="64" r="12" fill="#FF6B35"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Grok Night — trou noir">
+  <!-- Marque originale : horizon circulaire + disque d’accrétion. Pas le logo xAI. -->
+  <rect width="128" height="128" fill="#000000"/>
+  <ellipse cx="64" cy="64" rx="58" ry="18" fill="#C24F28" opacity=".85"/>
+  <ellipse cx="64" cy="64" rx="52" ry="14" fill="#FF6B35"/>
+  <ellipse cx="64" cy="64" rx="46" ry="10" fill="#FFC9A0"/>
+  <circle cx="64" cy="64" r="28" fill="#000000"/>
+  <circle cx="64" cy="64" r="30" fill="none" stroke="#FCFCFC" stroke-width="2.5"/>
 </svg>

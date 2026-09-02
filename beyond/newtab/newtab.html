@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nouvel onglet</title>
+  <link rel="icon" href="mark.png">
+  <style>
+    :root {
+      --void: #000;
+      --text: #FCFCFC;
+      --dim: #9E9E9E;
+      --line: rgba(252, 252, 252, .14);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #000; color: var(--text); }
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.72)),
+        url("wallpaper.jpg") center / cover no-repeat #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px 64px;
+    }
+    .mark { width: 96px; height: 96px; border-radius: 50%; }
+    h1 {
+      font-weight: 200;
+      letter-spacing: .42em;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      margin: 20px 0 6px;
+    }
+    .sub { color: var(--dim); margin: 0 0 36px; font-size: 14px; }
+    .sub a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      width: min(920px, 100%);
+    }
+    section {
+      background: rgba(0,0,0,.55);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 18px 10px;
+      backdrop-filter: blur(8px);
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      font-weight: 400;
+    }
+    dl { margin: 0; }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+    .row:first-of-type { border-top: 0; }
+    dt { color: var(--dim); font-weight: 400; }
+    dd { margin: 0; }
+    kbd {
+      display: inline-block;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font: 12px ui-monospace, monospace;
+      color: var(--text);
+    }
+    footer { margin-top: 28px; color: var(--dim); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <img class="mark" src="mark.png" alt="">
+  <h1>GROK</h1>
+  <p class="sub"><a href="https://grok.com">grok.com</a> · Linux · fan page, pas une release xAI</p>
+  <div class="grid">
+    <section>
+      <h2>grok.com</h2>
+      <dl>
+        <div class="row"><dt>Envoyer</dt><dd><kbd>Enter</kbd></dd></div>
+        <div class="row"><dt>Nouvelle ligne</dt><dd><kbd>Shift</kbd> <kbd>Enter</kbd></dd></div>
+        <div class="row"><dt>Arrêter</dt><dd><kbd>Esc</kbd></dd></div>
+        <div class="row"><dt>Éditer le dernier</dt><dd><kbd>↑</kbd></dd></div>
+        <div class="row"><dt>Composer</dt><dd><kbd>/</kbd></dd></div>
+        <div class="row"><dt>Sidebar</dt><dd><kbd>Ctrl</kbd> <kbd>B</kbd></dd></div>
+      </dl>
+    </section>
+    <section>
+      <h2>Slash</h2>
+      <dl>
+        <div class="row"><dt>Raisonnement</dt><dd><kbd>/think</kbd></dd></div>
+        <div class="row"><dt>Image</dt><dd><kbd>/imagine</kbd></dd></div>
+        <div class="row"><dt>Commandes</dt><dd><kbd>/help</kbd></dd></div>
+        <div class="row"><dt>Nouveau fil</dt><dd><kbd>/reset</kbd></dd></div>
+      </dl>
+    </section>
+    <section>
+      <h2>Grok Build (TUI)</h2>
+      <dl>
+        <div class="row"><dt>Palette</dt><dd><kbd>Ctrl</kbd> <kbd>P</kbd></dd></div>
+        <div class="row"><dt>Nouvelle session</dt><dd><kbd>/new</kbd></dd></div>
+        <div class="row"><dt>Modes</dt><dd><kbd>Shift</kbd> <kbd>Tab</kbd></dd></div>
+        <div class="row"><dt>Aide</dt><dd><kbd>/help</kbd></dd></div>
+      </dl>
+    </section>
+  </div>
+  <footer>Le thème ne peut pas coller cette page tout seul — d’où ce second module.</footer>
+</body>
+</html>

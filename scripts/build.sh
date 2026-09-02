@@ -57,3 +57,22 @@ for n in names:
 if "manifest.json" not in names:
     raise SystemExit("manifest.json absent du XPI")
 PY
+
+# Companion newtab (pas dans le thème : Firefox ignore newtab si "theme" est présent).
+NEWTAB="$ROOT/beyond/newtab"
+NTP_XPI="$DIST/grok-night-newtab.xpi"
+python3 - "$NEWTAB" "$NTP_XPI" <<'PY'
+import sys, zipfile
+from pathlib import Path
+root, xpi = Path(sys.argv[1]), Path(sys.argv[2])
+need = ["manifest.json", "newtab.html", "wallpaper.jpg", "mark.png"]
+missing = [n for n in need if not (root / n).is_file()]
+if missing:
+    raise SystemExit("newtab incomplet : " + ", ".join(missing))
+with zipfile.ZipFile(xpi, "w", zipfile.ZIP_DEFLATED) as zf:
+    for n in need + ["README.md"]:
+        p = root / n
+        if p.is_file():
+            zf.write(p, n)
+print(xpi)
+PY

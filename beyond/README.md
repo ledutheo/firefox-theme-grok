@@ -12,3 +12,5 @@ Ce dossier montre les trois vrais étages au-dessus, dans l'ordre de violence :
 | 4. `userChrome.css` | `beyond/userChrome/` | un profil, `toolkit.legacyUserProfileCustomizations.stylesheets` | tout le chrome, hors AMO |
 
 Android (Fennec) : `beyond/android/`.
+
+**Nouvel onglet** (`beyond/newtab/`) : un thème ne peut pas remplacer `about:newtab`. Second module, `chrome_url_overrides`.

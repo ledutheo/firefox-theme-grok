@@ -51,6 +51,22 @@ def rsvg(svg: Path, png: Path, size: int) -> None:
     )
 
 
+def circle_from_photo(src: Path, size: int, out: Path) -> None:
+    """Icône circulaire depuis la photo trou noir (fond transparent hors disque)."""
+    im = Image.open(src).convert("RGBA")
+    side = min(im.size)
+    left = (im.size[0] - side) // 2
+    top = (im.size[1] - side) // 2
+    im = im.crop((left, top, left + side, top + side)).resize(
+        (size, size), Image.Resampling.LANCZOS
+    )
+    mask = Image.new("L", (size, size), 0)
+    ImageDraw.Draw(mask).ellipse((1, 1, size - 2, size - 2), fill=255)
+    im.putalpha(mask)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    im.save(out, "PNG")
+
+
 def lerp(a: int, b: int, t: float) -> int:
     return int(round(a + (b - a) * t))
 
@@ -142,10 +158,6 @@ def make_frame(kind: str, mark: Image.Image) -> Image.Image:
     )
     img.alpha_composite(bloom)
 
-    # Filet orange type grok.com, collé au bord haut — toujours visible.
-    draw = ImageDraw.Draw(img)
-    draw.rectangle((0, 0, FRAME_W, 2), fill=(*accent, 220))
-
     mark_x = FRAME_W - MARK_ON_FRAME - 14
     mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2
     paste_mark(
@@ -199,15 +211,31 @@ def write_css_preview() -> None:
 def main() -> None:
     ICONS.mkdir(parents=True, exist_ok=True)
     IMAGES.mkdir(parents=True, exist_ok=True)
-    svg = SRC / "mark.svg"
-    for size in ICON_SIZES:
-        rsvg(svg, ICONS / f"icon-{size}.png", size)
+    photo = SRC / "blackhole.jpg"
+    if photo.is_file():
+        for size in ICON_SIZES:
+            circle_from_photo(photo, size, ICONS / f"icon-{size}.png")
+    else:
+        svg = SRC / "mark.svg"
+        for size in ICON_SIZES:
+            rsvg(svg, ICONS / f"icon-{size}.png", size)
+
+    wall = SRC / "wallpaper.jpg"
+    if wall.is_file():
+        Image.open(wall).convert("RGB").save(IMAGES / "ntp-wallpaper.jpg", "JPEG", quality=88)
+        newtab = ROOT / "beyond/newtab"
+        newtab.mkdir(parents=True, exist_ok=True)
+        Image.open(wall).convert("RGB").save(newtab / "wallpaper.jpg", "JPEG", quality=88)
+        circle_from_photo(photo, 256, newtab / "mark.png")
 
     mark_128 = Image.open(ICONS / "icon-128.png")
     make_frame("night", mark_128).save(IMAGES / "theme_frame.png", "PNG")
     make_frame("day", mark_128).save(IMAGES / "theme_frame_day.png", "PNG")
     make_glow().save(IMAGES / "glow.png", "PNG")
-    make_android_status().save(IMAGES / "android_status.png", "PNG")
+    # filet blanc, pas orange — chrome façon logo Grok (noir / blanc)
+    status = Image.new("RGB", (1080, 80), hex_to_rgb(TOKENS["void"]))
+    ImageDraw.Draw(status).rectangle((0, 76, 1080, 80), fill=hex_to_rgb(TOKENS["text"]))
+    status.save(IMAGES / "android_status.png", "PNG")
     # Calque 48×48, coin haut-droit des onglets (additional_backgrounds).
     spark = Image.open(ICONS / "icon-48.png").convert("RGBA")
     spark.save(IMAGES / "spark.png", "PNG")

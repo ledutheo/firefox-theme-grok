@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -73,8 +73,8 @@
       "tab_background_text": "#9E9E9E",
       "tab_background_separator": "#2A2A2A",
       "tab_text": "#FCFCFC",
-      "tab_line": "#FF6B35",
-      "tab_loading": "#FF6B35",
+      "tab_line": "#FFFFFF",
+      "tab_loading": "#FFFFFF",
       "tab_selected": "#141414",
 
       // ——— Barre d'outils ———
@@ -92,14 +92,14 @@
       "toolbar_field_border": "#2A2A2A",
       "toolbar_field_focus": "#1A1A1A",
       "toolbar_field_text_focus": "#FCFCFC",
-      "toolbar_field_border_focus": "#FF6B35",
-      "toolbar_field_highlight": "#FF6B35",
+      "toolbar_field_border_focus": "#FFFFFF",
+      "toolbar_field_highlight": "#FFFFFF",
       "toolbar_field_highlight_text": "#0A0A0A",
       // toolbar_field_separator : ignoré depuis Firefox 89.
 
       // ——— Icônes chrome ———
       "icons": "#FCFCFC",
-      "icons_attention": "#FF6B35",
+      "icons_attention": "#FFFFFF",
       "button_background_hover": "#242424",
       "button_background_active": "#2A2A2A",
 
@@ -107,7 +107,7 @@
       "popup": "#1A1A1A",
       "popup_text": "#FCFCFC",
       "popup_border": "#2A2A2A",
-      "popup_highlight": "#FF6B35",
+      "popup_highlight": "#FFFFFF",
       "popup_highlight_text": "#0A0A0A",
 
       // ——— Nouvelle page (about:newtab / about:home) ———
@@ -119,7 +119,7 @@
       "sidebar": "#141414",
       "sidebar_border": "#2A2A2A",
       "sidebar_text": "#FCFCFC",
-      "sidebar_highlight": "#FF6B35",
+      "sidebar_highlight": "#FFFFFF",
       "sidebar_highlight_text": "#0A0A0A"
     }
   },
@@ -148,8 +148,8 @@
       "tab_background_text": "#9E9E9E",
       "tab_background_separator": "#2A2A2A",
       "tab_text": "#FCFCFC",
-      "tab_line": "#FF6B35",
-      "tab_loading": "#FF6B35",
+      "tab_line": "#FFFFFF",
+      "tab_loading": "#FFFFFF",
       "tab_selected": "#141414",
       "toolbar": "#141414",
       "toolbar_text": "#FCFCFC",
@@ -162,17 +162,17 @@
       "toolbar_field_border": "#2A2A2A",
       "toolbar_field_focus": "#1A1A1A",
       "toolbar_field_text_focus": "#FCFCFC",
-      "toolbar_field_border_focus": "#FF6B35",
-      "toolbar_field_highlight": "#FF6B35",
+      "toolbar_field_border_focus": "#FFFFFF",
+      "toolbar_field_highlight": "#FFFFFF",
       "toolbar_field_highlight_text": "#0A0A0A",
       "icons": "#FCFCFC",
-      "icons_attention": "#FF6B35",
+      "icons_attention": "#FFFFFF",
       "button_background_hover": "#242424",
       "button_background_active": "#2A2A2A",
       "popup": "#1A1A1A",
       "popup_text": "#FCFCFC",
       "popup_border": "#2A2A2A",
-      "popup_highlight": "#FF6B35",
+      "popup_highlight": "#FFFFFF",
       "popup_highlight_text": "#0A0A0A",
       "ntp_background": "#0A0A0A",
       "ntp_card_background": "#1A1A1A",
@@ -180,7 +180,7 @@
       "sidebar": "#141414",
       "sidebar_border": "#2A2A2A",
       "sidebar_text": "#FCFCFC",
-      "sidebar_highlight": "#FF6B35",
+      "sidebar_highlight": "#FFFFFF",
       "sidebar_highlight_text": "#0A0A0A"
     }
   }
