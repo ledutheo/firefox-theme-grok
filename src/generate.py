@@ -12,7 +12,7 @@ import random
 import subprocess
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -86,35 +86,85 @@ def gradient_row(left: tuple[int, int, int], right: tuple[int, int, int], width:
     ]
 
 
-def star_catalog(count: int, seed: int, y_max: int) -> list[tuple[int, int, int, int, float]]:
-    """x, y, rayon, alpha_base, phase — pour faire clignoter sans tout recréer."""
+# Formes : point, croix, losange 4 branches, étincelle 6 branches.
+# Pas de disques remplis (ça faisait des « boules de neige »).
+SHAPE_DOT, SHAPE_PLUS, SHAPE_DIAMOND, SHAPE_SPARK = 0, 1, 2, 3
+
+
+def star_catalog(count: int, seed: int, y_max: int) -> list[tuple]:
+    """x, y, taille, alpha, phase, forme, scintille."""
     rng = random.Random(seed)
+    # Zone logos à droite : on n'y met pas d'étoiles.
+    logo_left = FRAME_W - WINDOW_CONTROLS - 6 * (MARK_ON_FRAME + 10)
     stars = []
-    for _ in range(count):
+    tries = 0
+    while len(stars) < count and tries < count * 8:
+        tries += 1
+        x = rng.randint(8, FRAME_W - WINDOW_CONTROLS - 8)
+        if x > logo_left:
+            continue
+        y = rng.randint(5, y_max)
+        roll = rng.random()
+        if roll < 0.62:
+            shape, size = SHAPE_DOT, 1
+        elif roll < 0.82:
+            shape, size = SHAPE_PLUS, rng.choice((2, 2, 3))
+        elif roll < 0.94:
+            shape, size = SHAPE_DIAMOND, rng.choice((2, 3))
+        else:
+            shape, size = SHAPE_SPARK, 3
         stars.append(
             (
-                rng.randint(0, FRAME_W - 1),
-                rng.randint(3, y_max),
-                rng.choice((0, 0, 0, 1, 1, 2)),
-                rng.randint(50, 200),
+                x,
+                y,
+                size,
+                rng.randint(90, 210),
                 rng.random() * 6.28,
+                shape,
+                rng.random() < 0.16,
             )
         )
     return stars
 
 
+def _draw_celestial(draw: ImageDraw.ImageDraw, x: int, y: int, size: int, shape: int, fill: tuple[int, int, int, int]) -> None:
+    if shape == SHAPE_DOT or size <= 1:
+        draw.point((x, y), fill=fill)
+        return
+    if shape == SHAPE_PLUS:
+        draw.line((x, y - size, x, y + size), fill=fill)
+        draw.line((x - size, y, x + size, y), fill=fill)
+        return
+    if shape == SHAPE_DIAMOND:
+        draw.polygon(
+            [(x, y - size), (x + max(1, size // 3), y), (x, y + size), (x - max(1, size // 3), y)],
+            fill=fill,
+        )
+        return
+    # étincelle 6 branches
+    draw.line((x, y - size, x, y + size), fill=fill)
+    draw.line((x - size, y, x + size, y), fill=fill)
+    s = max(1, int(size * 0.7))
+    draw.line((x - s, y - s, x + s, y + s), fill=fill)
+    draw.line((x - s, y + s, x + s, y - s), fill=fill)
+
+
 def paint_star_catalog(
     img: Image.Image,
-    stars: list[tuple[int, int, int, int, float]],
+    stars: list[tuple],
     color: tuple[int, int, int],
     t: float,
 ) -> None:
     overlay = Image.new("RGBA", img.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
-    for x, y, r, base, phase in stars:
-        pulse = 0.45 + 0.55 * (0.5 + 0.5 * math.sin(t * 2.2 + phase))
-        a = max(20, min(255, int(base * pulse)))
-        draw.ellipse((x - r, y - r, x + r, y + r), fill=(*color, a))
+    for x, y, size, base, phase, shape, twinkle in stars:
+        if twinkle:
+            # Une oscillation lente, amplitude faible — pas un stroboscope.
+            pulse = 0.84 + 0.16 * (0.5 + 0.5 * math.sin(t + phase))
+        else:
+            pulse = 1.0
+        a = max(40, min(255, int(base * pulse)))
+        _draw_celestial(draw, x, y, size, shape, (*color, a))
     img.alpha_composite(overlay)
 
 
@@ -134,6 +184,29 @@ def orange_bloom(size: tuple[int, int], color: tuple[int, int, int], cx: float, 
 
 def paste_mark(frame: Image.Image, mark: Image.Image, xy: tuple[int, int]) -> None:
     frame.alpha_composite(mark.convert("RGBA"), xy)
+
+
+def load_sky_band(path: Path, dest_w: int, dest_h: int) -> Image.Image:
+    """Ciel photo → bande d'onglets. On réduit 5× en hauteur pour des astres fins."""
+    im = Image.open(path).convert("RGB")
+    h = max(1, int(im.size[1] * dest_w / im.size[0]))
+    im = im.resize((dest_w, h), Image.Resampling.LANCZOS)
+    band_h = min(h, dest_h * 5)
+    y0 = max(0, h // 4)
+    if y0 + band_h > h:
+        y0 = max(0, h - band_h)
+    return im.crop((0, y0, dest_w, y0 + band_h)).resize(
+        (dest_w, dest_h), Image.Resampling.LANCZOS
+    )
+
+
+def composite_sky(frame: Image.Image, sky: Image.Image) -> None:
+    """Écran : le noir du ciel disparaît, les piques restent."""
+    rgb = frame.convert("RGB")
+    layer = Image.new("RGB", frame.size, (0, 0, 0))
+    layer.paste(sky, (0, 2))
+    mixed = ImageChops.screen(rgb, layer)
+    frame.paste(mixed.convert("RGBA"))
 
 
 def load_logo_variants(size: int) -> list[Image.Image]:
@@ -156,8 +229,9 @@ def load_logo_variants(size: int) -> list[Image.Image]:
 def make_frame(
     kind: str,
     logos: list[Image.Image],
-    stars: list[tuple[int, int, int, int, float]],
+    stars: list[tuple],
     t: float = 0.0,
+    sky: Image.Image | None = None,
 ) -> Image.Image:
     """Bande d'onglets : barre blanche, ciel d'étoiles, logos à gauche des boutons."""
     if kind == "night":
@@ -186,6 +260,8 @@ def make_frame(
                 255,
             )
 
+    if sky is not None:
+        composite_sky(img, sky)
     paint_star_catalog(img, stars, star, t)
 
     mark_y = (TAB_STRIP - MARK_ON_FRAME) // 2 + 2
@@ -313,15 +389,25 @@ def main() -> None:
         circle_from_photo(photo, 256, newtab / "mark.png")
 
     logos = load_logo_variants(MARK_ON_FRAME)
-    stars_night = star_catalog(520, seed=1975, y_max=TAB_STRIP - 2)
-    stars_day = star_catalog(80, seed=2026, y_max=TAB_STRIP - 2)
-    n_frames = 8
-    night_frames = [
-        make_frame("night", logos, stars_night, t=i / n_frames * 6.28)
-        for i in range(n_frames)
-    ]
-    write_apng(night_frames, IMAGES / "theme_frame.png", fps=7)
-    make_frame("day", logos, stars_day, t=0).save(IMAGES / "theme_frame_day.png", "PNG")
+    stars_night = star_catalog(55, seed=1975, y_max=TAB_STRIP - 4)
+    stars_day = star_catalog(18, seed=2026, y_max=TAB_STRIP - 4)
+    skies: list[Image.Image] = []
+    for name in ("starfield-a.jpg", "starfield-b.jpg", "starfield-c.jpg"):
+        path = SRC / "sky" / name
+        if path.is_file():
+            skies.append(load_sky_band(path, FRAME_W, TAB_STRIP))
+    # 10 images à 2 fps ≈ 5 s. Ciel photo qui cycle lentement + rares scintillements.
+    n_frames = 10
+    sky_order = [0, 0, 1, 1, 2, 2, 1, 1, 0, 1]
+    night_frames = []
+    for i in range(n_frames):
+        sky = skies[sky_order[i] % len(skies)] if skies else None
+        night_frames.append(
+            make_frame("night", logos, stars_night, t=i / n_frames * 6.28, sky=sky)
+        )
+    write_apng(night_frames, IMAGES / "theme_frame.png", fps=2)
+    sky0 = skies[0] if skies else None
+    make_frame("day", logos, stars_day, t=0, sky=sky0).save(IMAGES / "theme_frame_day.png", "PNG")
     night_frames[0].save(IMAGES / "theme_frame_still.png", "PNG")
     for junk in ICONS.glob("_tmp_*.png"):
         junk.unlink()
