@@ -8,7 +8,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 "$ROOT/scripts/build.sh" >/dev/null
 XPI="$ROOT/dist/grok-night.xpi"
-GECKO_ID="grok-night@ledutheo"
+GECKO_ID="{509635ca-327f-493d-a156-277548d25172}"
 FIREFOX_APP_ID="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
 
 echo "XPI : $XPI"

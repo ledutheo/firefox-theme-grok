@@ -1,31 +1,31 @@
-# Fiche AMO — à coller telle quelle
+# Fiche AMO — nouveau compte (à coller telle quelle)
 
 Type : **Thème** (pas extension).  
-ID : `grok-night@ledutheo`  
+ID : `{509635ca-327f-493d-a156-277548d25172}`  
 Fichier : `dist/grok-night.xpi` (`./scripts/build.sh`)  
 Captures : `docs/img/hero.png` (chrome, 1280×800), `docs/img/menu.png` (popup), `docs/img/void.png` (page)
 
+Ancien ID `grok-night@ledutheo` : **ne plus l’utiliser**. Il est lié au compte Mozilla supprimé.
+
 ## Name
 
-Grok Night
+Grok Void
 
 ## Summary (FR)
 
-L’appli Grok, dans Firefox. Pour les fans — et pour ceux qui n’ont pas encore compris.
+L’appli Grok, dans Firefox. Chrome void, trou noir, pour les fans.
 
 ## Summary (EN)
 
-Grok, in Firefox. For fans — and for anyone who hasn’t figured it out yet.
+Grok in Firefox. Void chrome, black hole, for fans.
 
 ## Description (FR)
 
-Grok Night, c’est Grok dans la chrome de Firefox.
-
-Void `#0A0A0A`. Barres `#141414`. Texte `#FCFCFC`. Étincelle `#FF6B35` sur l’onglet actif, le chargement, l’urlbar au focus.
+Grok Void habille Firefox comme grok.com : chrome noir, texte blanc, trou noir en couleur.
 
 Les sites restent les sites. Le navigateur, lui, est à nous.
 
-Fan theme, pas une release xAI. Marque originale (étoile + noyau orange).
+Fan theme, pas une release xAI. Marque originale.
 
 Firefox 115+ desktop, Android / Fennec (Fenix repeint peu).
 
@@ -33,15 +33,13 @@ https://github.com/ledutheo/firefox-theme-grok
 
 ## Description (EN)
 
-Grok Night is Grok in Firefox chrome.
-
-Void `#0A0A0A`. Toolbars `#141414`. Type `#FCFCFC`. Spark `#FF6B35` on the selected tab, loading, focused url bar.
+Grok Void dresses Firefox like grok.com: black chrome, white type, a colored black hole.
 
 Websites stay themselves. The browser is ours.
 
 Fan theme, not an xAI release. Original mark.
 
-Firefox 115+ desktop, Android / Fennec (Fenix applies very little).
+Firefox 115+ desktop, Android / Fennec.
 
 https://github.com/ledutheo/firefox-theme-grok
 

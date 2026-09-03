@@ -30,7 +30,7 @@ git clone git@github.com:ledutheo/firefox-theme-grok.git
 cd firefox-theme-grok
 ```
 
-Permanent : marche AMO point par point dans [`amo/SOUMETTRE.md`](amo/SOUMETTRE.md). Texte : [`amo/listing.md`](amo/listing.md). XPI : `./scripts/build.sh` → `dist/grok-night.xpi` ou les [Releases](https://github.com/ledutheo/firefox-theme-grok/releases).
+Permanent : **nouveau compte Mozilla** — ID `{509635ca-327f-493d-a156-277548d25172}`, nom AMO **Grok Void**. Marche : [`amo/SOUMETTRE.md`](amo/SOUMETTRE.md). Ne plus utiliser `grok-night@ledutheo` (compte supprimé, ID déjà pris).
 
 Aller plus loin dans le chrome : `./scripts/install-userchrome.sh`
 

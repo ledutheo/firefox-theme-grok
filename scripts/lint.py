@@ -30,7 +30,7 @@ def need(path: Path) -> None:
 manifest = load_jsonc(ROOT / "theme/manifest.json")
 if isinstance(manifest, dict):
     gecko = manifest.get("browser_specific_settings", {}).get("gecko", {})
-    if gecko.get("id") != "grok-night@ledutheo":
+    if gecko.get("id") != "{509635ca-327f-493d-a156-277548d25172}":
         errors.append("id gecko inattendu")
     if "theme" not in manifest or "dark_theme" not in manifest:
         errors.append("theme / dark_theme manquant")

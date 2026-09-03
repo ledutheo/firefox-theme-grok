@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.7.1",
+  "version": "2.0.0",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -28,7 +28,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "grok-night@ledutheo",
+      "id": "{509635ca-327f-493d-a156-277548d25172}",
       "strict_min_version": "115.0"
     },
     // Fennec F-Droid / Firefox Android (Fenix). Sans gecko_android,

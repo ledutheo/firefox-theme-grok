@@ -1,27 +1,27 @@
-# Envoyer Grok Night sur AMO — dans l’ordre
+# Soumettre Grok Void — **nouveau compte Mozilla**
 
-Compte : le même que Firefox Sync (compte Mozilla). Si tu n’en as pas : https://accounts.firefox.com
+L’ancien compte a déjà déposé l’ID `grok-night@ledutheo`. Même supprimé, Mozilla **garde** cet ID. D’où *Duplicate add-on ID found*.
 
-1. Ouvre https://addons.mozilla.org/developers/addon/submit/distribution
-2. Choisis **On this site** (listé sur AMO) — c’est ça qui donne l’install en un clic.
-3. Type de module : **Thème** (Theme), pas Extension.
-4. Envoie le fichier `dist/grok-night.xpi`  
-   (si tu n’en as pas : `cd ~/github/firefox-theme-grok && ./scripts/build.sh`)
-5. L’ID doit rester `grok-night@ledutheo`. Ne le change pas.
-6. Colle le texte de `amo/listing.md` :
-   - nom : Grok Night
-   - résumé FR / EN
-   - description FR / EN
-   - homepage : `https://github.com/ledutheo/firefox-theme-grok`
-7. Captures (1280×800) : `docs/img/hero.png`, puis `docs/img/menu.png` si ça en demande une 2e.
-8. Catégorie : Appearance. Licence : MIT (déjà dans le dépôt).
-9. **Non** : theme experiment, collecte de données, code source séparé (un thème n’en a pas besoin).
+Ce dépôt utilise maintenant :
+
+- **ID** `{509635ca-327f-493d-a156-277548d25172}`
+- **Nom AMO** `Grok Void`
+- **Version** `2.0.0` (première soumission de *ce* listing)
+
+Ce n’est **pas** une mise à jour de l’ancien thème. C’est un **nouveau** add-on.
+
+## Ordre
+
+1. Connecte-toi avec le **nouveau** compte : https://addons.mozilla.org/developers/
+2. **Submit a new add-on** (pas « upload new version » sur l’ancien).
+3. Distribution : **On this site**.
+4. Type : **Thème**.
+5. Fichier : `~/github/firefox-theme-grok/dist/grok-night.xpi`  
+   (`cd ~/github/firefox-theme-grok && ./scripts/build.sh` si besoin)
+6. Vérifie que l’ID affiché est `{509635ca-327f-493d-a156-277548d25172}`.
+7. Colle `amo/listing.md` (nom **Grok Void**, pas Grok Night).
+8. Captures : `docs/img/hero.png`, éventuellement `docs/img/menu.png`.
+9. Appearance, MIT, pas d’expérience, pas de collecte.
 10. Soumets.
 
-Ensuite Mozilla scanne et signe. Thème sans scripts = revue courte, souvent automatique. Tu reçois un mail. L’URL publique ressemblera à :
-
-`https://addons.mozilla.org/firefox/addon/…`
-
-Si un reviewer bloque le mot « Grok » (marque) : réponds que c’est un fan theme, disclaimer dans la fiche, marque originale (étoile), pas le logo xAI. Si ça ne passe pas, on renomme (ex. Night Spark) et on republie — l’ID peut rester.
-
-Firefox Release n’installera le thème **en permanent** qu’après cette signature.
+Si ça dit encore duplicate ID : tu n’as pas le XPI 2.0.0 (l’ancien ID est encore dans le zip). Rebuild, réessaie.

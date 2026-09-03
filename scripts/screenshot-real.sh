@@ -15,7 +15,7 @@ cleanup() { rm -rf "$PROFILE"; }
 trap cleanup EXIT
 
 mkdir -p "$PROFILE/extensions"
-cp "$XPI" "$PROFILE/extensions/grok-night@ledutheo.xpi"
+cp "$XPI" "$PROFILE/extensions/{509635ca-327f-493d-a156-277548d25172}.xpi"
 
 cat > "$PROFILE/user.js" <<EOF
 user_pref("xpinstall.signatures.required", false);
