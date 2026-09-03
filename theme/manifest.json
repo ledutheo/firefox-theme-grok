@@ -15,7 +15,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "default_locale": "fr",
   "author": "ledutheo",
   "homepage_url": "https://github.com/ledutheo/firefox-theme-grok",
@@ -34,8 +34,9 @@
     // Fennec F-Droid / Firefox Android (Fenix). Sans gecko_android,
     // AMO ne propose pas le thème sur mobile. L'effet chrome y est
     // limité (voir beyond/android/).
+    // Pas d'id ici : Firefox le refuse (warning « unexpected property »).
+    // L'id vit uniquement dans gecko.
     "gecko_android": {
-      "id": "grok-night@ledutheo",
       "strict_min_version": "120.0"
     }
   },
